@@ -12,5 +12,6 @@
     "start_url": "index.html",
     "display": "fullscreen",
     "theme_color": "#2564CF",
-    "background_color": "#2564CF"
+    "background_color": "#2564CF",
+    "categories": ["education"]
 }
