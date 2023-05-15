@@ -2,6 +2,7 @@ body {
   margin: 0;
   min-width: 250px;
   overflow-x: hidden;
+  font-family: "GT Walsheim Pro";
 }
 
 * {
@@ -73,7 +74,6 @@ ul li {
   /* make the list items unselectable */
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
@@ -127,18 +127,13 @@ input {
   margin: 0;
   border: none;
   border-radius: 0;
-  width: 75%;
+  width: calc(100% - 201px);
   padding: 10px;
   font-size: 13px;
   font-weight: 300;
 }
 
 input::-moz-placeholder {
-  font-size: 13px;
-  font-weight: 300;
-}
-
-input:-ms-input-placeholder {
   font-size: 13px;
   font-weight: 300;
 }
@@ -152,7 +147,7 @@ input::placeholder {
 .add {
   padding: 10px;
   border: 0;
-  width: 25%;
+  width: 200px;
   background: #2564CF;
   font-size: 13px;
   font-weight: 500;
@@ -190,7 +185,7 @@ input::placeholder {
 .modal .save {
   padding: 11px;
   height: 37px;
-  width: 25%;
+  width: 201px;
   background: #2564CF;
   font-size: 14px;
   font-weight: 500;
@@ -219,9 +214,6 @@ input::placeholder {
 .modal ::-moz-placeholder {
   font-weight: 300;
 }
-.modal :-ms-input-placeholder {
-  font-weight: 300;
-}
 .modal ::placeholder {
   font-weight: 300;
 }
@@ -232,16 +224,30 @@ input::placeholder {
   cursor: pointer;
 }
 
-footer {
-  text-align: left;
-  font-weight: 300;
-  font-size: 11px;
+footer .legal {
   padding: 30px 40px;
-  color: #b0adad;
+  font-size: 10px;
+  color: #CED4DA;
+  margin-right: 10px;
 }
+footer .legal .disclaimer {
+  font-size: 8px;
+  display: block;
+  margin-top: 10px;
+}
+footer .legal,
 footer a {
-  color: #b0adad;
+  font-weight: 300;
+  color: #CED4DA;
   text-decoration: none;
+  border-right: 1px solid #CED4DA;
+  margin-right: 5px;
+  padding-right: 8px;
+}
+footer .legal a:last-child {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 
 .loading {

@@ -2,6 +2,7 @@ body {
     margin: 0;
     min-width: 250px;
     overflow-x: hidden;
+    font-family: 'GT Walsheim Pro';
 }
 
 * {
@@ -131,7 +132,7 @@ input {
     margin: 0;
     border: none;
     border-radius: 0;
-    width: 75%;
+    width: calc(100% - 201px);
     padding: 10px;
     font-size: 13px;
     font-weight: 300;
@@ -146,7 +147,7 @@ input::placeholder {
 .add {
     padding: 10px;
     border: 0;
-    width: 25%;
+    width: 200px;
     background: #2564CF;
     font-size: 13px;
     font-weight: 500;
@@ -183,7 +184,7 @@ input::placeholder {
     .save {
         padding: 11px;
         height: 37px;
-        width: 25%;
+        width: 201px;
         background: #2564CF;
         font-size: 14px;
         font-weight: 500;
@@ -228,16 +229,35 @@ input::placeholder {
 }
 
 footer {
-    text-align: left;
-    font-weight: 300;
-    font-size: 11px;
-    padding: 30px 40px;
-    color: #b0adad;
+    .legal {
+        padding: 30px 40px;
+        font-size: 10px;
+        color: #CED4DA;
+        margin-right: 10px;
 
-    a {
-        color: #b0adad;
-        text-decoration: none;
+        .disclaimer {
+            font-size: 8px;
+            display: block;
+            margin-top: 10px;
+        }
     }
+
+    .legal,
+    a {
+        font-weight: 300;
+        color: #CED4DA;
+        text-decoration: none;
+        border-right: 1px solid #CED4DA;
+        margin-right: 5px;
+        padding-right: 8px;
+    }
+
+    .legal a:last-child {
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
 }
 
 .loading {
