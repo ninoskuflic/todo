@@ -1,6 +1,6 @@
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-}
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('./sw.js', { scope: '/' });
+// }
 
 /**
  * ANIMATE THE INTRO LOGO 
@@ -74,7 +74,7 @@ greeting.innerHTML = `${welcomeText}`;
  * DATE
  */
 
-const options = { weekday: 'long', month: 'long', day: 'numeric' };
+const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
 let date = new Date();
 document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
 

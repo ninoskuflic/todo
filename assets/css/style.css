@@ -3,9 +3,6 @@ body {
   min-width: 250px;
   overflow-x: hidden;
   font-family: "GT Walsheim Pro";
-}
-
-* {
   box-sizing: border-box;
 }
 
@@ -84,8 +81,6 @@ ul li.checked {
   text-decoration: line-through;
   padding: 12px 8px 12px 35px;
 }
-
-/* Add a 'checked' mark when clicked on */
 ul li.checked::before {
   content: "";
   position: absolute;
@@ -108,7 +103,6 @@ ul li.checked::before {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
-
 .close:hover {
   transition: 0.3s;
   background-color: #242423;
@@ -120,7 +114,7 @@ ul li.checked::before {
   background-color: #EFF1F7;
   padding: 40px 40px;
   color: #202020;
-  min-height: 217px;
+  min-height: 160px;
 }
 
 /* Style the input */
@@ -128,17 +122,15 @@ input {
   margin: 0;
   border: none;
   border-radius: 0;
-  width: calc(100% - 201px);
+  width: calc(100% - 200px);
   padding: 10px;
   font-size: 13px;
   font-weight: 300;
 }
-
 input::-moz-placeholder {
   font-size: 13px;
   font-weight: 300;
 }
-
 input::placeholder {
   font-size: 13px;
   font-weight: 300;
@@ -148,7 +140,7 @@ input::placeholder {
 .add {
   padding: 10px;
   border: 0;
-  width: 200px;
+  width: 150px;
   background: #2564CF;
   font-size: 13px;
   font-weight: 500;
@@ -160,7 +152,6 @@ input::placeholder {
   border-radius: 0;
   margin-left: -4px;
 }
-
 .add:hover {
   background-color: #202020;
 }
@@ -185,8 +176,7 @@ input::placeholder {
 }
 .modal .save {
   padding: 11px;
-  height: 37px;
-  width: 201px;
+  width: 100px;
   background: #2564CF;
   font-size: 14px;
   font-weight: 500;
@@ -198,7 +188,7 @@ input::placeholder {
   transition: 0.3s;
   border-radius: 0;
 }
-.modal .save:hover {
+.modal .save :hover {
   background-color: #151515;
 }
 .modal .modal-content {
@@ -211,11 +201,12 @@ input::placeholder {
   float: inherit;
   font-weight: 300;
   border: 1px solid #EFEFEF;
+  width: calc(100% - 144px);
 }
-.modal ::-moz-placeholder {
+.modal input::-moz-placeholder {
   font-weight: 300;
 }
-.modal ::placeholder {
+.modal input::placeholder {
   font-weight: 300;
 }
 .modal .close-modal {
@@ -246,6 +237,9 @@ footer .legal a {
   border-right: 1px solid #333;
   margin-right: 5px;
   padding-right: 8px;
+}
+footer .legal a:hover {
+  text-decoration: underline;
 }
 footer .legal a:last-child {
   border: none;
@@ -284,6 +278,10 @@ footer .legal a:last-child {
   cursor: pointer;
 }
 
+#date {
+  display: block;
+}
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
   p {
     font-size: 12px;
@@ -295,5 +293,23 @@ footer .legal a:last-child {
     top: 45% !important;
     width: 35% !important;
     left: 35% !important;
+  }
+  .main img {
+    display: none;
+  }
+  .add-tasks input {
+    width: calc(100% - 131px);
+  }
+  .modal input {
+    width: calc(100% - 144px);
+  }
+  .modal .modal-content {
+    width: 80%;
+  }
+  .add {
+    width: 110px;
+  }
+  #date {
+    padding-top: 10px;
   }
 }/*# sourceMappingURL=style.css.map */
