@@ -227,7 +227,7 @@ input::placeholder {
 footer .legal {
   padding: 30px 40px;
   font-size: 10px;
-  color: #CED4DA;
+  color: #333;
   margin-right: 10px;
 }
 footer .legal .disclaimer {
@@ -238,9 +238,9 @@ footer .legal .disclaimer {
 footer .legal,
 footer a {
   font-weight: 300;
-  color: #CED4DA;
+  color: #333;
   text-decoration: none;
-  border-right: 1px solid #CED4DA;
+  border-right: 1px solid #333;
   margin-right: 5px;
   padding-right: 8px;
 }
