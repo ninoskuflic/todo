@@ -1,7 +1,7 @@
 {
     "name": "To Do",
     "short_name": "To Do",
-    "description": "A simple To Do app by Skuflic.com",
+    "description": "To Do by Skuflic.com",
     "icons": [
         {
             "src": "assets/pwa.png",
