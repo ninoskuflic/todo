@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 81.9 66.6" style="enable-background:new 0 0 81.9 66.6;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+</style>
+<script>//<![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// 
+	
+	]]>
+</script>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1.1" y1="34.7" x2="80.7" y2="34.7" gradientTransform="matrix(1 0 0 -1 0 68)">
+	<stop  offset="0" style="stop-color:#1257C0"/>
+	<stop  offset="1" style="stop-color:#4FBDF6"/>
+</linearGradient>
+<path class="st0" d="M69.3,2.2c-0.4-0.4-1-0.4-1.4,0L31.6,39.5c-0.4,0.4-1,0.4-1.4,0L13.8,24.1c-0.4-0.4-1-0.4-1.4,0l-11,11
+	c-0.4,0.4-0.4,1,0,1.4l28.7,27.9c0.4,0.4,1,0.4,1.4,0l48.9-49.8c0.4-0.4,0.4-1,0-1.4L69.3,2.2z"/>
+</svg>

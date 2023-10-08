@@ -4,7 +4,7 @@
     "description": "To Do by Skuflic.com",
     "icons": [
         {
-            "src": "assets/pwa.png",
+            "src": "assets/images/pwa.png",
             "type": "image/png",
             "sizes": "512x512"
         }
@@ -13,5 +13,7 @@
     "display": "fullscreen",
     "theme_color": "#2564CF",
     "background_color": "#2564CF",
-    "categories": ["education"]
+    "categories": [
+        "education"
+    ]
 }

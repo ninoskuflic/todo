@@ -1,0 +1,61 @@
+@import '../variables';
+
+.dark {
+    main {
+        background-color: $dark;
+    }
+
+    footer {
+        background-color: $dark;
+
+        .legal {
+            color: $white;
+
+            a {
+                color: $white;
+                border-right: 1px solid $white;
+            }
+        }
+    }
+
+    ul {
+        li {
+            background-color: $light-dark;
+            color: $white;
+            border: 1px solid $light-dark;
+
+            &.checked {
+                color: $white;
+
+                &::before {
+                    border-color: $white;
+                }
+            }
+        }
+    }
+
+    .header {
+        background-color: $dark;
+        color: $white;
+    }
+
+    input {
+        background-color: $light-dark;
+        color: $white;
+    }
+
+    .modal .modal-content {
+        background-color: $light-dark;
+        color: $white;
+
+        input {
+            border: 1px solid $gray;
+            color: $white;
+        }
+    }
+
+    select {
+        background-color: $light-dark;
+        color: $white;
+    }
+}
