@@ -2,7 +2,7 @@
     .add-tasks {
         flex-direction: column !important;
 
-        &>*:not(:last-child) {
+        & > *:not(:last-child) {
             margin-bottom: 10px !important;
         }
     }
@@ -40,5 +40,9 @@
     .task {
         width: 85%;
         display: block;
+    }
+
+    .top-bar {
+        padding: 10px 40px !important;
     }
 }

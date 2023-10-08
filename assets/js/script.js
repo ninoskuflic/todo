@@ -206,7 +206,8 @@ document.getElementById('inputField').addEventListener('keypress', function (eve
 // Function to Create Tasks
 function createTaskListItem(task) {
     const li = document.createElement('li');
-    li.innerHTML = `<span class='task'>${task.task}</span><span class='date'>${task.date}</span><span class='category'> — ${task.category}</span>`;
+
+    li.innerHTML = `<span class='task'>${task.task}</span><span class='date'>${task.date}</span><span class='category ${task.category.toLowerCase().split(' ').join('-')}'>${task.category}</span>`;
     li.dataset.id = task.id;
     li.dataset.completed = task.completed;
 

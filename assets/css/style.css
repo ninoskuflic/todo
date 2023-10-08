@@ -36,10 +36,15 @@
 }
 .dark .modal .modal-content input {
   border: 1px solid #757575;
+  border-right: 0px;
   color: white;
 }
 .dark select {
   background-color: #201f1e;
+  color: white;
+}
+
+#empty {
   color: white;
 }
 
@@ -61,7 +66,7 @@
 .modal .save {
   padding: 10px;
   width: 100px;
-  background: #2564cf;
+  background: #1575ff;
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
@@ -132,10 +137,16 @@
     width: 85%;
     display: block;
   }
+  .top-bar {
+    padding: 10px 40px !important;
+  }
 }
+* {
+  font-family: "GT Walsheim Pro";
+}
+
 body {
   margin: 0;
-  font-family: "GT Walsheim Pro";
   box-sizing: border-box;
 }
 
@@ -201,7 +212,7 @@ ul li.checked::before {
   border-color: #605e5c;
   border-style: solid;
   border-width: 0 2px 2px 0;
-  top: 18px;
+  top: 21px;
   left: 17px;
   transform: rotate(45deg);
   height: 12px;
@@ -212,6 +223,7 @@ ul li.checked .task {
 }
 ul li .task {
   display: block;
+  margin-bottom: 5px;
 }
 ul li .close {
   position: absolute;
@@ -226,7 +238,7 @@ ul li .close.material-symbols-outlined {
   margin-bottom: 0px;
   margin-top: 0px;
   font-size: 20px;
-  padding: 17px;
+  padding: 19px;
 }
 ul li .date {
   font-size: 10px;
@@ -237,6 +249,40 @@ ul li .category {
   font-size: 10px;
   margin-top: 5px;
   color: #757575;
+  border: 1px solid;
+  padding: 2px 4px 2px 4px;
+  border-radius: 10px;
+  margin-left: 5px;
+}
+ul li .category.personal {
+  color: #03dac5;
+}
+ul li .category.work {
+  color: #bc86fc;
+}
+ul li .category.home-improvement {
+  color: #f64740;
+}
+ul li .category.education {
+  color: #0041a1;
+}
+ul li .category.shopping {
+  color: #e1badd;
+}
+ul li .category.health-and-wellness {
+  color: #3700b3;
+}
+ul li .category.financial {
+  color: #cfc7b9;
+}
+ul li .category.social {
+  color: #9aadc7;
+}
+ul li .category.travel {
+  color: #a8eff0;
+}
+ul li .category.miscellaneous {
+  color: #b7c8a6;
 }
 
 .container {
@@ -339,7 +385,7 @@ p {
 .header .add-tasks button {
   padding: 9.5px;
   border: 0;
-  background: #2564cf;
+  background: #1575ff;
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
@@ -369,7 +415,7 @@ p {
   position: fixed;
   background-color: #eff1f7;
   z-index: 999;
-  color: #2564cf;
+  color: #1575ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -405,13 +451,13 @@ p {
 
 .top-bar {
   align-items: center;
-  background-color: #2564cf;
+  background-color: #1575ff;
   color: white;
   display: flex;
-  font-size: 0.6875rem;
+  font-size: 11px;
   font-weight: 200;
   justify-content: space-between;
-  padding: 0px 40px;
+  padding: 2px 40px;
   text-align: left;
   z-index: 10;
 }
@@ -423,4 +469,24 @@ p {
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%) contrast(114%);
   margin-bottom: 0px;
+}
+
+#empty {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 300;
+  opacity: 0.2;
+  color: #292827;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+#empty h1 {
+  margin: 0;
+  text-align: inherit;
+}
+#empty p {
+  margin: 0;
+  text-align: inherit;
+  font-size: 2rem;
 }/*# sourceMappingURL=style.css.map */

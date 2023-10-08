@@ -1,12 +1,12 @@
-@import './dark-mode/dark-mode';
-@import './modal/modal';
+@import "./dark-mode/dark-mode";
+@import "./modal/modal";
 
-@import './media-queries';
-@import './reset';
-@import './variables';
-@import './footer/footer';
+@import "./media-queries";
+@import "./reset";
+@import "./variables";
+@import "./footer/footer";
 
-@import './task-list/task_list';
+@import "./task-list/task_list";
 
 .container {
     display: flex;
@@ -82,12 +82,12 @@ p {
             padding: 10px;
             font-size: 13px;
             font-weight: 300;
-            font-family: 'GT Walsheim Pro';
+            font-family: "GT Walsheim Pro";
 
             &::placeholder {
                 font-size: 13px;
                 font-weight: 300;
-                font-family: 'GT Walsheim Pro';
+                font-family: "GT Walsheim Pro";
             }
         }
 
@@ -101,7 +101,7 @@ p {
             border-left: 10px solid transparent;
             font-size: 13px;
             font-weight: 300;
-            font-family: 'GT Walsheim Pro';
+            font-family: "GT Walsheim Pro";
             min-height: 35px;
         }
 
@@ -129,7 +129,6 @@ p {
         cursor: pointer;
         text-decoration: underline;
     }
-
 }
 
 .change-name {
@@ -153,7 +152,7 @@ p {
         margin: 0;
         padding: 0;
         text-align: center;
-        opacity: .1;
+        opacity: 0.1;
         user-select: none;
     }
 }
@@ -181,10 +180,10 @@ p {
     background-color: $blue;
     color: $white;
     display: flex;
-    font-size: .6875rem;
+    font-size: 11px;
     font-weight: 200;
     justify-content: space-between;
-    padding: 0px 40px;
+    padding: 2px 40px;
     text-align: left;
     z-index: 10;
 
@@ -195,8 +194,28 @@ p {
 
     .close {
         cursor: pointer;
-        -webkit-filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%) contrast(114%);
-        filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%) contrast(114%);
+        -webkit-filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg)
+            brightness(112%) contrast(114%);
+        filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%)
+            contrast(114%);
         margin-bottom: 0px;
+    }
+}
+
+#empty {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 300;
+    opacity: 0.2;
+    color: $darker-black;
+    user-select: none;
+    h1 {
+        margin: 0;
+        text-align: inherit;
+    }
+    p {
+        margin: 0;
+        text-align: inherit;
+        font-size: 2rem;
     }
 }

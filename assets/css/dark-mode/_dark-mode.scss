@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 .dark {
     main {
@@ -50,6 +50,7 @@
 
         input {
             border: 1px solid $gray;
+            border-right: 0px;
             color: $white;
         }
     }
@@ -58,4 +59,8 @@
         background-color: $light-dark;
         color: $white;
     }
+}
+
+#empty {
+    color: $white;
 }

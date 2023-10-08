@@ -1,8 +1,7 @@
-@import '../variables';
+@import "../variables";
 
 ul {
     margin-right: 40px;
-
     li {
         cursor: pointer;
         position: relative;
@@ -30,12 +29,12 @@ ul {
             padding: 12px 8px 12px 35px;
 
             &::before {
-                content: '';
+                content: "";
                 position: absolute;
                 border-color: $light-gray;
                 border-style: solid;
                 border-width: 0 2px 2px 0;
-                top: 18px;
+                top: 21px;
                 left: 17px;
                 transform: rotate(45deg);
                 height: 12px;
@@ -49,6 +48,7 @@ ul {
 
         .task {
             display: block;
+            margin-bottom: 5px;
         }
 
         .close {
@@ -64,7 +64,7 @@ ul {
                 margin-bottom: 0px;
                 margin-top: 0px;
                 font-size: 20px;
-                padding: 17px;
+                padding: 19px;
             }
         }
 
@@ -78,10 +78,50 @@ ul {
             font-size: 10px;
             margin-top: 5px;
             color: #757575;
-            // border: 1px solid;
-            // padding: 2px 4px 2px 4px;
-            // border-radius: 10px;
-            // margin-left: 5px;
+            border: 1px solid;
+            padding: 2px 4px 2px 4px;
+            border-radius: 10px;
+            margin-left: 5px;
+
+            &.personal {
+                color: #03dac5;
+            }
+
+            &.work {
+                color: #bc86fc;
+            }
+
+            &.home-improvement {
+                color: #f64740;
+            }
+
+            &.education {
+                color: #0041a1;
+            }
+
+            &.shopping {
+                color: #e1badd;
+            }
+
+            &.health-and-wellness {
+                color: #3700b3;
+            }
+
+            &.financial {
+                color: #cfc7b9;
+            }
+
+            &.social {
+                color: #9aadc7;
+            }
+
+            &.travel {
+                color: #a8eff0;
+            }
+
+            &.miscellaneous {
+                color: #b7c8a6;
+            }
         }
     }
 }
