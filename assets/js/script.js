@@ -157,6 +157,7 @@ document.getElementById('list').addEventListener('click', function (event) {
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
             }
+            checkEmpty();
             console.log('Resource deleted successfully');
         }).catch(error => {
             console.error('Error:', error);
@@ -221,7 +222,7 @@ function createTaskListItem(task) {
     if (task.completed === 'true') {
         li.classList.add('checked');
     }
-
+    checkEmpty();
     return li;
 }
 
@@ -285,4 +286,12 @@ function showError() {
     setTimeout(function () {
         error.placeholder = 'Add a task...';
     }, 2000);
+}
+
+function checkEmpty() {
+    if (document.getElementById('list').childNodes.length > 0 == true) {
+        document.getElementById('empty').style.display = 'none';
+    } else {
+        document.getElementById('empty').style.display = 'initial';
+    }
 }
