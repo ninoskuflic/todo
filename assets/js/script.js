@@ -18,7 +18,9 @@ document.getElementById('dark-mode').addEventListener('click', enableDarkMode);
 
 function enableDarkMode() {
     document.body.classList.toggle('dark');
-    const darkMode = document.getElementById('dark-mode')
+    const darkMode = document.getElementById('dark-mode');
+    document.getElementById('loading').style.backgroundColor = '#121212';
+    document.querySelector('.percentage').style.color = '#FFF';
     darkMode.innerHTML === 'Enable Dark Mode' ? darkMode.innerHTML = 'Disable Dark Mode' : darkMode.innerHTML = 'Enable Dark Mode';
 }
 
