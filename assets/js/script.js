@@ -167,9 +167,11 @@ document.getElementById('list').addEventListener('click', function (event) {
 
         if (event.target.classList.contains('task') || event.target.classList.contains('date') || event.target.classList.contains('category')) {
             event.target.parentElement.classList.toggle('checked');
+            event.target.parentElement.classList.toggle('overdue');
             var taskCompletionStatus = event.target.parentElement.dataset.completed == 'true' ? event.target.parentElement.dataset.completed = 'false' : event.target.parentElement.dataset.completed = 'true'
         } else {
             event.target.classList.toggle('checked');
+            event.target.classList.toggle('overdue');
             var taskCompletionStatus = event.target.dataset.completed == 'true' ? event.target.dataset.completed = 'false' : event.target.dataset.completed = 'true'
         }
 
@@ -190,8 +192,6 @@ document.getElementById('list').addEventListener('click', function (event) {
         }).catch(error => {
             console.error('Error:', error);
         });
-
-
     }
 });
 
@@ -206,21 +206,23 @@ document.getElementById('inputField').addEventListener('keypress', function (eve
 // Function to Create Tasks
 function createTaskListItem(task) {
     const li = document.createElement('li');
+    const formattedDate = new Date(task.dueDate);
 
     li.innerHTML = `
     <span class='task' data-id='${task.id}'>${task.task}</span>
-    <span class='date' data-id='${task.id}'>${task.date}</span>
+    <span class='date' data-id='${task.id}'>Added ${task.date}${task.dueDate && `— Due ${formattedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}</span>
     <span class='category ${task.category.toLowerCase().split(' ').join('-')}' data-id='${task.id}'>${task.category}</span>
     <span class='close material-symbols-outlined'>delete</span>
     `;
 
     li.dataset.id = task.id;
     li.dataset.completed = task.completed;
-    list.appendChild(li);
 
-    if (task.completed === 'true') {
-        li.classList.add('checked');
-    }
+    ((formattedDate < date && task.completed !== 'true')) && li.classList.add('overdue')
+    task.completed === 'true' && li.classList.add('checked');
+
+
+    list.appendChild(li);
     checkEmpty();
     return li;
 }
@@ -240,6 +242,7 @@ fetch(api_url)
 
 function newTask() {
     const input = document.getElementById('inputField').value;
+    const dueDate = document.getElementById('due-date').value;
 
     if (!input) {
         showError();
@@ -255,8 +258,7 @@ function newTask() {
 
     const category = document.getElementById('category').value;
     const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId };
-
+    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, dueDate: dueDate };
 
     // POST Task to Server
     fetch(api_url, {

@@ -1,12 +1,12 @@
-@import "./dark-mode/dark-mode";
-@import "./modal/modal";
+@import './dark-mode/dark-mode';
+@import './modal/modal';
 
-@import "./media-queries";
-@import "./reset";
-@import "./variables";
-@import "./footer/footer";
+@import './media-queries';
+@import './reset';
+@import './variables';
+@import './footer/footer';
 
-@import "./task-list/task_list";
+@import './task-list/task_list';
 
 .container {
     display: flex;
@@ -82,13 +82,18 @@ p {
             padding: 10px;
             font-size: 13px;
             font-weight: 300;
-            font-family: "GT Walsheim Pro";
+            font-family: 'GT Walsheim Pro';
 
             &::placeholder {
                 font-size: 13px;
                 font-weight: 300;
-                font-family: "GT Walsheim Pro";
+                font-family: 'GT Walsheim Pro';
             }
+        }
+
+        #due-date {
+            max-width: 130px;
+            color: #757575;
         }
 
         select {
@@ -101,7 +106,7 @@ p {
             border-left: 10px solid transparent;
             font-size: 13px;
             font-weight: 300;
-            font-family: "GT Walsheim Pro";
+            font-family: 'GT Walsheim Pro';
             min-height: 35px;
         }
 
@@ -209,10 +214,12 @@ p {
     opacity: 0.2;
     color: $darker-black;
     user-select: none;
+
     h1 {
         margin: 0;
         text-align: inherit;
     }
+
     p {
         margin: 0;
         text-align: inherit;
