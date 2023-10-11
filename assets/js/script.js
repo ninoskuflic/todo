@@ -4,6 +4,7 @@ const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
 // Global Variables
 const date = new Date();
 const options = { month: 'long', day: 'numeric', year: 'numeric' };
+const audio = new Audio('assets/audio/ping.mp3');
 
 // Service Worker
 // if ('serviceWorker' in navigator) {
@@ -172,6 +173,8 @@ document.getElementById('list').addEventListener('click', function (event) {
 
             if (event.target.parentElement.dataset.completed !== 'false') {
                 Date.parse(event.target.parentElement.dataset.due) < date && event.target.parentElement.classList.add('overdue');
+            } else {
+                audio.play();
             }
 
             var taskCompletionStatus = event.target.parentElement.dataset.completed == 'true' ? event.target.parentElement.dataset.completed = 'false' : event.target.parentElement.dataset.completed = 'true'
@@ -182,6 +185,8 @@ document.getElementById('list').addEventListener('click', function (event) {
 
             if (event.target.dataset.completed !== 'false') {
                 Date.parse(event.target.dataset.due) < date && event.target.classList.add('overdue');
+            } else {
+                audio.play();
             }
 
             var taskCompletionStatus = event.target.dataset.completed == 'true' ? event.target.dataset.completed = 'false' : event.target.dataset.completed = 'true'
@@ -198,8 +203,6 @@ document.getElementById('list').addEventListener('click', function (event) {
                 throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
             } else {
                 console.log('Resource updated successfully');
-                const audio = new Audio('assets/audio/ping.mp3');
-                audio.play();
             }
         }).catch(error => {
             console.error('Error:', error);
