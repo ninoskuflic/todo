@@ -64,8 +64,14 @@
         background-color: $light-dark;
         color: $white;
     }
-}
 
-#empty {
-    color: $white;
+    .add-tasks {
+        input {
+            color-scheme: dark;
+        }
+    }
+
+    #empty {
+        color: $white;
+    }
 }

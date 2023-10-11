@@ -47,8 +47,10 @@
   background-color: #201f1e;
   color: white;
 }
-
-#empty {
+.dark .add-tasks input {
+  color-scheme: dark;
+}
+.dark #empty {
   color: white;
 }
 

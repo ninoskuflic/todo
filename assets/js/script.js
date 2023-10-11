@@ -17,6 +17,7 @@ if (localStorage.getItem('preferDark') == '1') {
 }
 
 document.getElementById('dark-mode').addEventListener('click', enableDarkMode);
+document.getElementById('due-date').valueAsDate = date;
 
 function enableDarkMode() {
     document.body.classList.toggle('dark');
@@ -70,7 +71,6 @@ setTimeout(() => {
     document.getElementsByClassName('loading')[0].style.display = 'none';
 }, 1500)
 
-
 // Modal
 // References to DOM elements
 const modal = document.getElementById('modal');
@@ -101,7 +101,6 @@ window.addEventListener('click', function (event) {
     }
 });
 
-
 // Footer
 document.getElementById('year').innerText = date.getFullYear();
 
@@ -129,8 +128,6 @@ document.getElementById('year').innerText = date.getFullYear();
 
 })()
 
-
-
 // User Data
 function setUser() {
     localStorage.setItem('user', document.getElementById('name').value);
@@ -143,56 +140,49 @@ function setUser() {
     document.getElementById('user').innerText = `${!user ? 'Hey there stranger' : user}`;
 })();
 
-// Core Functionalities of To Do List
-document.getElementById('list').addEventListener('click', function (event) {
-    if (event.target.classList.contains('close')) {
-        const div = event.target.parentElement;
-
-        fetch(`${api_url}/${div.dataset.id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }).then(response => {
+// Delete task
+function handleResourceDeletion(element) {
+    fetch(`${api_url}/${element.dataset.id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+            } else {
+                element.remove();
+                checkEmpty();
+                console.log('Resource deleted successfully');
             }
-            div.remove();
-            checkEmpty();
-            console.log('Resource deleted successfully');
-        }).catch(error => {
+        })
+        .catch((error) => {
             console.error('Error:', error);
         });
+}
 
-    } else if (event.target.tagName.toLowerCase() == 'li' || event.target.classList.contains('task') || event.target.classList.contains('date') || event.target.classList.contains('category')) {
+// Core Functionalities of To Do App
+document.getElementById('list').addEventListener('click', (event) => {
+    if (event.target.classList.contains('close')) {
+        handleResourceDeletion(event.target.parentElement)
+    } else {
+        const clickedElement = event.target;
 
-        if (event.target.classList.contains('task') || event.target.classList.contains('date') || event.target.classList.contains('category')) {
-            event.target.parentElement.classList.toggle('checked');
+        // Use the closest method to find the nearest ancestor with a specific class
+        const listItem = clickedElement.closest('li');
+        listItem.classList.toggle('checked');
+        listItem.classList.remove('overdue');
 
-            event.target.parentElement.classList.remove('overdue');
-
-            if (event.target.parentElement.dataset.completed !== 'false') {
-                Date.parse(event.target.parentElement.dataset.due) < date && event.target.parentElement.classList.add('overdue');
-            } else {
-                audio.play();
-            }
-
-            var taskCompletionStatus = event.target.parentElement.dataset.completed == 'true' ? event.target.parentElement.dataset.completed = 'false' : event.target.parentElement.dataset.completed = 'true'
-
+        if (listItem.dataset.completed !== 'false') {
+            Date.parse(listItem.dataset.due) < date && listItem.classList.add('overdue');
         } else {
-            event.target.classList.toggle('checked');
-            event.target.classList.remove('overdue');
-
-            if (event.target.dataset.completed !== 'false') {
-                Date.parse(event.target.dataset.due) < date && event.target.classList.add('overdue');
-            } else {
-                audio.play();
-            }
-
-            var taskCompletionStatus = event.target.dataset.completed == 'true' ? event.target.dataset.completed = 'false' : event.target.dataset.completed = 'true'
+            audio.play();
         }
 
-        fetch(`${api_url}/${event.target.dataset.id}`, {
+        const taskCompletionStatus = listItem.dataset.completed == 'true' ? listItem.dataset.completed = 'false' : listItem.dataset.completed = 'true'
+
+        fetch(`${api_url}/${listItem.dataset.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -221,17 +211,17 @@ document.getElementById('inputField').addEventListener('keypress', function (eve
 // Function to Create Tasks
 function createTaskListItem(task) {
     const li = document.createElement('li');
-    const formattedDate = new Date(task.dueDate);
+    const formattedDate = new Date(task.due);
 
     li.innerHTML = `
     <span class='task' data-id='${task.id}'>${task.task}</span>
-    <span class='date' data-id='${task.id}'>Added ${task.date}${task.dueDate && ` — Due ${formattedDate.toLocaleDateString('en-US', options)}`}</span>
+    <span class='date' data-id='${task.id}'>Added ${task.date}${task.due && ` — Due ${formattedDate.toLocaleDateString('en-US', options)}`}</span>
     <span class='category ${task.category.toLowerCase().split(' ').join('-')}' data-id='${task.id}'>${task.category}</span>
     <span class='close material-symbols-outlined'>delete</span>
     `;
 
     li.dataset.id = task.id;
-    li.dataset.due = task.dueDate;
+    li.dataset.due = task.due;
     li.dataset.completed = task.completed;
 
     ((formattedDate < date && task.completed !== 'true')) && li.classList.add('overdue')
@@ -257,7 +247,7 @@ fetch(api_url)
 
 function newTask() {
     const input = document.getElementById('inputField').value;
-    const dueDate = document.getElementById('due-date').value;
+    const due = document.getElementById('due-date').value;
 
     if (!input) {
         showError();
@@ -273,7 +263,7 @@ function newTask() {
 
     const category = document.getElementById('category').value;
     const formattedDate = date.toLocaleDateString('en-US', options);
-    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, dueDate: dueDate };
+    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, due: due };
 
     // POST Task to Server
     fetch(api_url, {
