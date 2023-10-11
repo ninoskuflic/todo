@@ -3,6 +3,7 @@ const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
 
 // Global Variables
 const date = new Date();
+const options = { month: 'long', day: 'numeric', year: 'numeric' };
 
 // Service Worker
 // if ('serviceWorker' in navigator) {
@@ -123,7 +124,6 @@ document.getElementById('year').innerText = date.getFullYear();
     document.getElementById('greeting').innerHTML = `${text}`;
 
     // Date
-    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
     document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
 
 })()
@@ -167,11 +167,23 @@ document.getElementById('list').addEventListener('click', function (event) {
 
         if (event.target.classList.contains('task') || event.target.classList.contains('date') || event.target.classList.contains('category')) {
             event.target.parentElement.classList.toggle('checked');
-            event.target.parentElement.classList.toggle('overdue');
+
+            event.target.parentElement.classList.remove('overdue');
+
+            if (event.target.parentElement.dataset.completed !== 'false') {
+                Date.parse(event.target.parentElement.dataset.due) < date && event.target.parentElement.classList.add('overdue');
+            }
+
             var taskCompletionStatus = event.target.parentElement.dataset.completed == 'true' ? event.target.parentElement.dataset.completed = 'false' : event.target.parentElement.dataset.completed = 'true'
+
         } else {
             event.target.classList.toggle('checked');
-            event.target.classList.toggle('overdue');
+            event.target.classList.remove('overdue');
+
+            if (event.target.dataset.completed !== 'false') {
+                Date.parse(event.target.dataset.due) < date && event.target.classList.add('overdue');
+            }
+
             var taskCompletionStatus = event.target.dataset.completed == 'true' ? event.target.dataset.completed = 'false' : event.target.dataset.completed = 'true'
         }
 
@@ -210,17 +222,17 @@ function createTaskListItem(task) {
 
     li.innerHTML = `
     <span class='task' data-id='${task.id}'>${task.task}</span>
-    <span class='date' data-id='${task.id}'>Added ${task.date}${task.dueDate && `— Due ${formattedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}</span>
+    <span class='date' data-id='${task.id}'>Added ${task.date}${task.dueDate && ` — Due ${formattedDate.toLocaleDateString('en-US', options)}`}</span>
     <span class='category ${task.category.toLowerCase().split(' ').join('-')}' data-id='${task.id}'>${task.category}</span>
     <span class='close material-symbols-outlined'>delete</span>
     `;
 
     li.dataset.id = task.id;
+    li.dataset.due = task.dueDate;
     li.dataset.completed = task.completed;
 
     ((formattedDate < date && task.completed !== 'true')) && li.classList.add('overdue')
     task.completed === 'true' && li.classList.add('checked');
-
 
     list.appendChild(li);
     checkEmpty();
@@ -257,7 +269,7 @@ function newTask() {
     }
 
     const category = document.getElementById('category').value;
-    const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    const formattedDate = date.toLocaleDateString('en-US', options);
     const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, dueDate: dueDate };
 
     // POST Task to Server
