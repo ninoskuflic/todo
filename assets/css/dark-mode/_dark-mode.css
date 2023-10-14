@@ -39,6 +39,11 @@
   color: white;
 }
 
+.dark #due-date {
+  background-color: #201f1e;
+  color: #757575;
+}
+
 .dark .modal .modal-content {
   background-color: #201f1e;
   color: white;
@@ -55,6 +60,10 @@
   color: white;
 }
 
-#empty {
+.dark .add-tasks input {
+  color-scheme: dark;
+}
+
+.dark #empty {
   color: white;
 }

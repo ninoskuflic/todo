@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 
 .dark {
     main {
@@ -44,6 +44,11 @@
         color: $white;
     }
 
+    #due-date {
+        background-color: $light-dark;
+        color: #757575;
+    }
+
     .modal .modal-content {
         background-color: $light-dark;
         color: $white;
@@ -59,8 +64,14 @@
         background-color: $light-dark;
         color: $white;
     }
-}
 
-#empty {
-    color: $white;
+    .add-tasks {
+        input {
+            color-scheme: dark;
+        }
+    }
+
+    #empty {
+        color: $white;
+    }
 }

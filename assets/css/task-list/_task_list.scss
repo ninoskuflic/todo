@@ -1,11 +1,11 @@
-@import "../variables";
+@import '../variables';
 
 ul {
     margin-right: 40px;
     li {
         cursor: pointer;
         position: relative;
-        padding: 12px 8px 12px 10px;
+        padding: 12px 8px 12px 8px;
         list-style-type: none;
         background: $white;
         color: $darker-black;
@@ -23,13 +23,19 @@ ul {
         /* make the list items unselectable */
         user-select: none;
 
+        &.overdue {
+            background: #fff1f1;
+            color: $darker-black;
+            border: #fff1f1;
+        }
+
         &.checked {
             //background: #EFF1F7;
             color: $light-gray;
             padding: 12px 8px 12px 35px;
 
             &::before {
-                content: "";
+                content: '';
                 position: absolute;
                 border-color: $light-gray;
                 border-style: solid;
@@ -64,7 +70,7 @@ ul {
                 margin-bottom: 0px;
                 margin-top: 0px;
                 font-size: 20px;
-                padding: 19px;
+                padding: 19px 10px 19px 19px;
             }
         }
 

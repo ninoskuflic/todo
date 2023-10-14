@@ -37,6 +37,10 @@
         padding-top: 10px;
     }
 
+    #due-date {
+        max-width: 100% !important;
+    }
+
     .task {
         width: 85%;
         display: block;
@@ -44,5 +48,16 @@
 
     .top-bar {
         padding: 10px 40px !important;
+    }
+    ul {
+        li {
+            .date {
+                display: block;
+                margin-bottom: 5px;
+            }
+            .category {
+                margin-left: 0px !important;
+            }
+        }
     }
 }

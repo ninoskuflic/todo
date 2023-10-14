@@ -30,6 +30,10 @@
   background-color: #201f1e;
   color: white;
 }
+.dark #due-date {
+  background-color: #201f1e;
+  color: #757575;
+}
 .dark .modal .modal-content {
   background-color: #201f1e;
   color: white;
@@ -43,8 +47,10 @@
   background-color: #201f1e;
   color: white;
 }
-
-#empty {
+.dark .add-tasks input {
+  color-scheme: dark;
+}
+.dark #empty {
   color: white;
 }
 
@@ -133,12 +139,22 @@
   #date {
     padding-top: 10px;
   }
+  #due-date {
+    max-width: 100% !important;
+  }
   .task {
     width: 85%;
     display: block;
   }
   .top-bar {
     padding: 10px 40px !important;
+  }
+  ul li .date {
+    display: block;
+    margin-bottom: 5px;
+  }
+  ul li .category {
+    margin-left: 0px !important;
   }
 }
 * {
@@ -186,7 +202,7 @@ ul {
 ul li {
   cursor: pointer;
   position: relative;
-  padding: 12px 8px 12px 10px;
+  padding: 12px 8px 12px 8px;
   list-style-type: none;
   background: white;
   color: #292827;
@@ -201,6 +217,11 @@ ul li {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+ul li.overdue {
+  background: #fff1f1;
+  color: #292827;
+  border: #fff1f1;
 }
 ul li.checked {
   color: #605e5c;
@@ -238,7 +259,7 @@ ul li .close.material-symbols-outlined {
   margin-bottom: 0px;
   margin-top: 0px;
   font-size: 20px;
-  padding: 19px;
+  padding: 19px 10px 19px 19px;
 }
 ul li .date {
   font-size: 10px;
@@ -368,6 +389,10 @@ p {
   font-size: 13px;
   font-weight: 300;
   font-family: "GT Walsheim Pro";
+}
+.header .add-tasks #due-date {
+  max-width: 130px;
+  color: #757575;
 }
 .header .add-tasks select {
   border: 0px;

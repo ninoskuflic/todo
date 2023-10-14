@@ -3,6 +3,8 @@ const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
 
 // Global Variables
 const date = new Date();
+const options = { month: 'long', day: 'numeric', year: 'numeric' };
+const audio = new Audio('assets/audio/ping.mp3');
 
 // Service Worker
 // if ('serviceWorker' in navigator) {
@@ -15,10 +17,13 @@ if (localStorage.getItem('preferDark') == '1') {
 }
 
 document.getElementById('dark-mode').addEventListener('click', enableDarkMode);
+document.getElementById('due-date').valueAsDate = date;
 
 function enableDarkMode() {
     document.body.classList.toggle('dark');
-    const darkMode = document.getElementById('dark-mode')
+    const darkMode = document.getElementById('dark-mode');
+    document.getElementById('loading').style.backgroundColor = '#121212';
+    document.querySelector('.percentage').style.color = '#FFF';
     darkMode.innerHTML === 'Enable Dark Mode' ? darkMode.innerHTML = 'Disable Dark Mode' : darkMode.innerHTML = 'Enable Dark Mode';
 }
 
@@ -66,7 +71,6 @@ setTimeout(() => {
     document.getElementsByClassName('loading')[0].style.display = 'none';
 }, 1500)
 
-
 // Modal
 // References to DOM elements
 const modal = document.getElementById('modal');
@@ -97,7 +101,6 @@ window.addEventListener('click', function (event) {
     }
 });
 
-
 // Footer
 document.getElementById('year').innerText = date.getFullYear();
 
@@ -121,12 +124,9 @@ document.getElementById('year').innerText = date.getFullYear();
     document.getElementById('greeting').innerHTML = `${text}`;
 
     // Date
-    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
     document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
 
 })()
-
-
 
 // User Data
 function setUser() {
@@ -140,58 +140,63 @@ function setUser() {
     document.getElementById('user').innerText = `${!user ? 'Hey there stranger' : user}`;
 })();
 
-// Core Functionalities of To Do List
-document.getElementById('list').addEventListener('click', function (event) {
-    if (event.target.classList.contains('close')) {
-        const div = event.target.parentElement;
-        div.remove();
-
-        const resourceUrl = `${api_url}/${div.dataset.id}`;
-
-        fetch(resourceUrl, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }).then(response => {
+// Delete task
+function handleResourceDeletion(element) {
+    fetch(`${api_url}/${element.dataset.id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+            } else {
+                element.remove();
+                checkEmpty();
+                console.log('Resource deleted successfully');
             }
-            console.log('Resource deleted successfully');
-        }).catch(error => {
+        })
+        .catch((error) => {
             console.error('Error:', error);
         });
+}
 
-    } else if (event.target.tagName.toLowerCase() == 'li' || event.target.classList.contains('task') || event.target.classList.contains('date') || event.target.classList.contains('category')) {
+// Core Functionalities of To Do App
+document.getElementById('list').addEventListener('click', (event) => {
+    if (event.target.classList.contains('close')) {
+        handleResourceDeletion(event.target.parentElement)
+    } else {
+        const clickedElement = event.target;
 
-        if (event.target.classList.contains('task') || event.target.classList.contains('date') || event.target.classList.contains('category')) {
-            event.target.parentElement.classList.toggle('checked');
-            const audio = new Audio('assets/audio/ping.mp3');
-            audio.play();
+        // Use the closest method to find the nearest ancestor with a specific class
+        const listItem = clickedElement.closest('li');
+        listItem.classList.toggle('checked');
+        listItem.classList.remove('overdue');
+
+        if (listItem.dataset.completed !== 'false') {
+            Date.parse(listItem.dataset.due) < date && listItem.classList.add('overdue');
         } else {
-            event.target.classList.toggle('checked');
+            audio.play();
         }
 
-        const resourceUrl = `${api_url}/${event.target.dataset.id}`;
+        const taskCompletionStatus = listItem.dataset.completed == 'true' ? listItem.dataset.completed = 'false' : listItem.dataset.completed = 'true'
 
-        const updatedData = event.target.dataset.completed == 'true' ? event.target.dataset.completed = 'false' : event.target.dataset.completed = 'true';
-
-        fetch(resourceUrl, {
+        fetch(`${api_url}/${listItem.dataset.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ completed: updatedData }),
+            body: JSON.stringify({ completed: taskCompletionStatus }),
         }).then(response => {
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+            } else {
+                console.log('Resource updated successfully');
             }
-            console.log('Resource updated successfully');
         }).catch(error => {
             console.error('Error:', error);
         });
-
-
     }
 });
 
@@ -206,22 +211,24 @@ document.getElementById('inputField').addEventListener('keypress', function (eve
 // Function to Create Tasks
 function createTaskListItem(task) {
     const li = document.createElement('li');
+    const formattedDate = new Date(task.due);
 
-    li.innerHTML = `<span class='task'>${task.task}</span><span class='date'>${task.date}</span><span class='category ${task.category.toLowerCase().split(' ').join('-')}'>${task.category}</span>`;
+    li.innerHTML = `
+    <span class='task' data-id='${task.id}'>${task.task}</span>
+    <span class='date' data-id='${task.id}'>Added ${task.date}${task.due && ` — Due ${formattedDate.toLocaleDateString('en-US', options)}`}</span>
+    <span class='category ${task.category.toLowerCase().split(' ').join('-')}' data-id='${task.id}'>${task.category}</span>
+    <span class='close material-symbols-outlined'>delete</span>
+    `;
+
     li.dataset.id = task.id;
+    li.dataset.due = task.due;
     li.dataset.completed = task.completed;
 
-    const span = document.createElement('span');
-    span.innerHTML = `delete`;
-    span.className = 'close material-symbols-outlined';
-    li.appendChild(span);
+    ((formattedDate < date && task.completed !== 'true')) && li.classList.add('overdue')
+    task.completed === 'true' && li.classList.add('checked');
 
     list.appendChild(li);
-
-    if (task.completed === 'true') {
-        li.classList.add('checked');
-    }
-
+    checkEmpty();
     return li;
 }
 
@@ -240,16 +247,12 @@ fetch(api_url)
 
 function newTask() {
     const input = document.getElementById('inputField').value;
+    const due = document.getElementById('due-date').value;
 
     if (!input) {
         showError();
         return;
     }
-
-    const category = document.getElementById('category').value;
-    const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    const task = { task: input, completed: 'false', date: formattedDate, category: category };
-
     let newId = 1;
     const list = document.getElementById('list');
     const lastChild = list.lastChild;
@@ -257,6 +260,10 @@ function newTask() {
     if (lastChild && lastChild.dataset && lastChild.dataset.id) {
         newId = parseInt(lastChild.dataset.id) + 1;
     }
+
+    const category = document.getElementById('category').value;
+    const formattedDate = date.toLocaleDateString('en-US', options);
+    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, due: due };
 
     // POST Task to Server
     fetch(api_url, {
@@ -268,14 +275,14 @@ function newTask() {
     }).then(response => {
         if (!response.ok) {
             throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+        } else {
+            createTaskListItem(task);
+            document.getElementById('inputField').value = null;
+            console.log('Resource posted successfully');
         }
-        console.log('Resource posted successfully');
     }).catch(error => {
         console.error('Error:', error);
     });
-
-    createTaskListItem(task);
-    document.getElementById('inputField').value = null;
 }
 
 function showError() {
@@ -285,4 +292,12 @@ function showError() {
     setTimeout(function () {
         error.placeholder = 'Add a task...';
     }, 2000);
+}
+
+function checkEmpty() {
+    if (document.getElementById('list').childNodes.length > 0 == true) {
+        document.getElementById('empty').style.display = 'none';
+    } else {
+        document.getElementById('empty').style.display = 'initial';
+    }
 }
