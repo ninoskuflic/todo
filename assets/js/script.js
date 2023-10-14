@@ -1,6 +1,3 @@
-// Imports
-import { setCookie, getCookie } from './utils.js';
-
 // API Endpoint
 const api_url = 'https://api.learn.skuflic.com/tasks';
 
