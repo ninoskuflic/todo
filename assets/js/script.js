@@ -1,5 +1,5 @@
 // Imports
-import { setCookie, getCookie } from './utils';
+import { setCookie, getCookie } from './utils.js';
 
 // API Endpoint
 const api_url = 'https://api.learn.skuflic.com/tasks';
@@ -46,8 +46,7 @@ if (getCookie('skuflic-todo-cookie-notice') == 'closed') {
 }
 
 // Logo Animation
-var changes = 0;
-progressLogEl = document.querySelector('.percentage');
+const progressLogEl = document.querySelector('.percentage');
 anime({
     targets: '.loading .el',
     direction: 'alternate',
