@@ -1,5 +1,5 @@
 // API Endpoint
-const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
+const api_url = 'https://api.learn.skuflic.com/tasks';
 
 // Global Variables
 const date = new Date();
@@ -10,6 +10,16 @@ const audio = new Audio('assets/audio/ping.mp3');
 // if ('serviceWorker' in navigator) {
 //     navigator.serviceWorker.register('/sw.js', { scope: '/' });
 // }
+
+function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+function setCookie(name, value, days) {
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    let expires = 'expires=' + date.toUTCString();
+    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+}
 
 // Dark Mode
 if (localStorage.getItem('preferDark') == '1') {
@@ -42,20 +52,8 @@ if (getCookie('skuflic-todo-cookie-notice') == 'closed') {
     document.querySelector('.top-bar').style.display = 'none';
 }
 
-function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-}
-
-function setCookie(name, value, days) {
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    let expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
-}
-
 // Logo Animation
-var changes = 0;
-progressLogEl = document.querySelector('.percentage');
+const progressLogEl = document.querySelector('.percentage');
 anime({
     targets: '.loading .el',
     direction: 'alternate',
