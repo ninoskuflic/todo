@@ -1,5 +1,5 @@
 // API Endpoint
-const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
+const api_url = 'https://api.learn.skuflic.com/tasks';
 
 // Global Variables
 const date = new Date();
@@ -54,22 +54,20 @@ function setCookie(name, value, days) {
 }
 
 // Logo Animation
-var changes = 0;
-progressLogEl = document.querySelector('.percentage');
 anime({
     targets: '.loading .el',
     direction: 'alternate',
     loop: false,
-    duration: 1500,
+    duration: 1000,
     easing: 'easeInOutCirc',
     update: function (anim) {
-        progressLogEl.innerHTML = Math.round(anim.progress) + '%';
+        document.querySelector('.percentage').innerHTML = Math.round(anim.progress) + '%';
     },
 });
 
 setTimeout(() => {
     document.getElementsByClassName('loading')[0].style.display = 'none';
-}, 1500)
+}, 1000)
 
 // Modal
 // References to DOM elements
@@ -183,7 +181,7 @@ document.getElementById('list').addEventListener('click', (event) => {
         const taskCompletionStatus = listItem.dataset.completed == 'true' ? listItem.dataset.completed = 'false' : listItem.dataset.completed = 'true'
 
         fetch(`${api_url}/${listItem.dataset.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -263,7 +261,7 @@ function newTask() {
 
     const category = document.getElementById('category').value;
     const formattedDate = date.toLocaleDateString('en-US', options);
-    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, due: due };
+    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: parseInt(newId), due: due };
 
     // POST Task to Server
     fetch(api_url, {

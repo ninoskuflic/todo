@@ -1,7 +1,7 @@
 {
     "name": "To Do",
     "short_name": "To Do",
-    "description": "To Do by Skuflic.com",
+    "description": "A To Do app is a digital tool for creating, managing, and tracking tasks, enabling efficient organization of your personal and professional responsibilities.",
     "icons": [
         {
             "src": "assets/images/pwa.png",
