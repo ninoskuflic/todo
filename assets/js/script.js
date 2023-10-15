@@ -1,5 +1,5 @@
 // API Endpoint
-const api_url = 'https://api.learn.skuflic.com/tasks';
+const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
 
 // Global Variables
 const date = new Date();
@@ -181,7 +181,7 @@ document.getElementById('list').addEventListener('click', (event) => {
         const taskCompletionStatus = listItem.dataset.completed == 'true' ? listItem.dataset.completed = 'false' : listItem.dataset.completed = 'true'
 
         fetch(`${api_url}/${listItem.dataset.id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
