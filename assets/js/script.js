@@ -1,5 +1,5 @@
 // API Endpoint
-const api_url = 'https://64fdbdfb596493f7af7e82b1.mockapi.io/tasks';
+const api_url = 'https://api.learn.skuflic.com/tasks';
 
 // Global Variables
 const date = new Date();
@@ -7,17 +7,29 @@ const options = { month: 'long', day: 'numeric', year: 'numeric' };
 const audio = new Audio('assets/audio/ping.mp3');
 
 // Service Worker
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('/sw.js', { scope: '/' });
-// }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' });
+}
+
+function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+
+function setCookie(name, value, days) {
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    let expires = 'expires=' + date.toUTCString();
+    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+}
+
+// Date
+document.getElementById('due-date').valueAsDate = date;
+document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
 
 // Dark Mode
 if (localStorage.getItem('preferDark') == '1') {
     enableDarkMode()
 }
-
-document.getElementById('dark-mode').addEventListener('click', enableDarkMode);
-document.getElementById('due-date').valueAsDate = date;
 
 function enableDarkMode() {
     document.body.classList.toggle('dark');
@@ -28,6 +40,7 @@ function enableDarkMode() {
 }
 
 document.getElementById('dark-mode').addEventListener('click', function () {
+    enableDarkMode()
     localStorage.getItem('preferDark') == '1' ? localStorage.setItem('preferDark', '0') : localStorage.setItem('preferDark', '1');
 });
 
@@ -42,18 +55,8 @@ if (getCookie('skuflic-todo-cookie-notice') == 'closed') {
     document.querySelector('.top-bar').style.display = 'none';
 }
 
-function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-}
-
-function setCookie(name, value, days) {
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    let expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
-}
-
 // Logo Animation
+const progressLogEl = document.querySelector('.percentage');
 anime({
     targets: '.loading .el',
     direction: 'alternate',
@@ -61,7 +64,7 @@ anime({
     duration: 1000,
     easing: 'easeInOutCirc',
     update: function (anim) {
-        document.querySelector('.percentage').innerHTML = Math.round(anim.progress) + '%';
+        progressLogEl.innerHTML = Math.round(anim.progress) + '%';
     },
 });
 
@@ -120,10 +123,6 @@ document.getElementById('year').innerText = date.getFullYear();
     }
 
     document.getElementById('greeting').innerHTML = `${text}`;
-
-    // Date
-    document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
-
 })()
 
 // User Data
@@ -181,7 +180,7 @@ document.getElementById('list').addEventListener('click', (event) => {
         const taskCompletionStatus = listItem.dataset.completed == 'true' ? listItem.dataset.completed = 'false' : listItem.dataset.completed = 'true'
 
         fetch(`${api_url}/${listItem.dataset.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -261,7 +260,7 @@ function newTask() {
 
     const category = document.getElementById('category').value;
     const formattedDate = date.toLocaleDateString('en-US', options);
-    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: parseInt(newId), due: due };
+    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, due: due };
 
     // POST Task to Server
     fetch(api_url, {

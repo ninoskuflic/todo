@@ -30,7 +30,6 @@ ul {
         }
 
         &.checked {
-            //background: #EFF1F7;
             color: $light-gray;
             padding: 12px 8px 12px 35px;
 
@@ -77,13 +76,13 @@ ul {
         .date {
             font-size: 10px;
             margin-top: 5px;
-            color: #757575;
+            color: $gray;
         }
 
         .category {
             font-size: 10px;
             margin-top: 5px;
-            color: #757575;
+            color: $gray;
             border: 1px solid;
             padding: 2px 4px 2px 4px;
             border-radius: 10px;

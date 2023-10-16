@@ -9,7 +9,9 @@
         background-color: $dark;
 
         .legal {
-            color: $white;
+            p {
+                color: $white;
+            }
 
             a {
                 color: $white;
