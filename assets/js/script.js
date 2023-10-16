@@ -3,13 +3,13 @@ const api_url = 'https://api.learn.skuflic.com/tasks';
 
 // Global Variables
 const date = new Date();
-const options = { month: 'long', day: 'numeric', year: 'numeric' };
 const audio = new Audio('assets/audio/ping.mp3');
+const options = { month: 'long', day: 'numeric', year: 'numeric' };
 
 // Service Worker
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-}
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('/sw.js', { scope: '/' });
+// }
 
 function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
