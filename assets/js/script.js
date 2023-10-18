@@ -5,6 +5,7 @@ const api_url = 'https://api.learn.skuflic.com/tasks';
 const date = new Date();
 const audio = new Audio('assets/audio/ping.mp3');
 const options = { month: 'long', day: 'numeric', year: 'numeric' };
+const list = document.getElementById('list');
 
 // Service Worker
 // if ('serviceWorker' in navigator) {
@@ -12,19 +13,19 @@ const options = { month: 'long', day: 'numeric', year: 'numeric' };
 // }
 
 function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
+    const match = document.cookie.match(new RegExp(name + '=([^;]+)'));
+    return match ? match[1] : null;
 }
 
 function setCookie(name, value, days) {
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    let expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+    document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`;
 }
 
 // Date
 document.getElementById('due-date').valueAsDate = date;
 document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
+document.getElementById('year').innerText = date.getFullYear();
 
 // Dark Mode
 if (localStorage.getItem('preferDark') == '1') {
@@ -102,9 +103,6 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Footer
-document.getElementById('year').innerText = date.getFullYear();
-
 // Greeting & Date
 (function () {
     const hour = date.getHours()
@@ -171,8 +169,11 @@ document.getElementById('list').addEventListener('click', (event) => {
         listItem.classList.toggle('checked');
         listItem.classList.remove('overdue');
 
+        const due = new Date(listItem.dataset.due)
+
         if (listItem.dataset.completed !== 'false') {
-            Date.parse(listItem.dataset.due) < date && listItem.classList.add('overdue');
+            console.log()
+            due < date && due.toLocaleDateString('en-US', options) !== date.toLocaleDateString('en-US', options) && task.completed !== 'true' && listItem.classList.add('overdue');
         } else {
             audio.play();
         }
@@ -200,7 +201,6 @@ document.getElementById('list').addEventListener('click', (event) => {
 // Event delegation for input field keypress
 document.getElementById('inputField').addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
-        event.preventDefault();
         document.getElementById('add').click();
     }
 });
@@ -221,7 +221,7 @@ function createTaskListItem(task) {
     li.dataset.due = task.due;
     li.dataset.completed = task.completed;
 
-    ((formattedDate < date && task.completed !== 'true')) && li.classList.add('overdue')
+    formattedDate < date && formattedDate.toLocaleDateString('en-US', options) !== date.toLocaleDateString('en-US', options) && task.completed !== 'true' && li.classList.add('overdue');
     task.completed === 'true' && li.classList.add('checked');
 
     list.appendChild(li);
@@ -233,7 +233,6 @@ function createTaskListItem(task) {
 fetch(api_url)
     .then(response => response.json())
     .then(data => {
-        const list = document.getElementById('list');
         data.forEach(task => {
             const li = createTaskListItem(task);
             list.appendChild(li);
@@ -245,22 +244,24 @@ fetch(api_url)
 function newTask() {
     const input = document.getElementById('inputField').value;
     const due = document.getElementById('due-date').value;
+    const category = document.getElementById('category').value;
 
-    if (!input) {
+    if (!input.trim()) {
         showError();
         return;
     }
-    let newId = 1;
-    const list = document.getElementById('list');
+
     const lastChild = list.lastChild;
+    let newId = lastChild?.dataset.id == null ? 1 : parseInt(lastChild.dataset.id) + 1;
 
-    if (lastChild && lastChild.dataset && lastChild.dataset.id) {
-        newId = parseInt(lastChild.dataset.id) + 1;
-    }
-
-    const category = document.getElementById('category').value;
-    const formattedDate = date.toLocaleDateString('en-US', options);
-    const task = { task: input, completed: 'false', date: formattedDate, category: category, id: newId, due: due };
+    const task = {
+        id: newId,
+        task: input,
+        completed: 'false',
+        date: date.toLocaleDateString('en-US', options),
+        category: category,
+        due: due
+    };
 
     // POST Task to Server
     fetch(api_url, {
@@ -292,7 +293,7 @@ function showError() {
 }
 
 function checkEmpty() {
-    if (document.getElementById('list').childNodes.length > 0 == true) {
+    if (document.getElementById('list').childNodes.length > 0) {
         document.getElementById('empty').style.display = 'none';
     } else {
         document.getElementById('empty').style.display = 'initial';
