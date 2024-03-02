@@ -72,7 +72,7 @@
 .modal .save {
   padding: 10px;
   width: 100px;
-  background: #1575ff;
+  background: #1475ff;
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
@@ -415,7 +415,7 @@ p {
 .header .add-tasks button {
   padding: 9.5px;
   border: 0;
-  background: #1575ff;
+  background: #1475ff;
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
@@ -445,7 +445,7 @@ p {
   position: fixed;
   background-color: #eff1f7;
   z-index: 999;
-  color: #1575ff;
+  color: #1475ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -481,7 +481,7 @@ p {
 
 .top-bar {
   align-items: center;
-  background-color: #1575ff;
+  background-color: #1475ff;
   color: white;
   display: flex;
   font-size: 11px;
@@ -493,7 +493,8 @@ p {
 }
 .top-bar p {
   margin: 0 !important;
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 300;
 }
 .top-bar .close {
   cursor: pointer;
