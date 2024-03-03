@@ -1,5 +1,5 @@
 // API Endpoint
-const api_url = 'https://api.learn.skuflic.com/tasks';
+const api_url = 'https://api.edu.skuflic.com/tasks';
 
 // Global Variables
 const date = new Date();
