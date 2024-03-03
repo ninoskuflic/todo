@@ -44,11 +44,12 @@
   color: white;
 }
 .dark select {
-  background-color: #201f1e;
+  background-color: #201f1e !important;
   color: white;
 }
 .dark .add-tasks input {
   color-scheme: dark;
+  background-color: #201f1e !important;
 }
 .dark #empty {
   color: white;
@@ -384,6 +385,7 @@ p {
   font-size: 13px;
   font-weight: 300;
   font-family: "GT Walsheim Pro";
+  background: white;
 }
 .header .add-tasks input::-moz-placeholder {
   font-size: 13px;
@@ -411,6 +413,7 @@ p {
   font-weight: 300;
   font-family: "GT Walsheim Pro";
   min-height: 35px;
+  background: white;
 }
 .header .add-tasks button {
   padding: 9.5px;
@@ -500,6 +503,9 @@ p {
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%) contrast(114%);
   margin-bottom: 0px;
+}
+.top-bar a {
+  color: white;
 }
 
 #empty {

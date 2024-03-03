@@ -83,6 +83,7 @@ p {
             font-size: 13px;
             font-weight: 300;
             font-family: 'GT Walsheim Pro';
+            background: $white;
 
             &::placeholder {
                 font-size: 13px;
@@ -108,6 +109,7 @@ p {
             font-weight: 300;
             font-family: 'GT Walsheim Pro';
             min-height: 35px;
+            background: $white;
         }
 
         button {
@@ -203,6 +205,10 @@ p {
         -webkit-filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%) contrast(114%);
         filter: brightness(0) saturate(100%) invert(100%) sepia(0) saturate(7500%) hue-rotate(47deg) brightness(112%) contrast(114%);
         margin-bottom: 0px;
+    }
+
+    a {
+        color: $white;
     }
 }
 

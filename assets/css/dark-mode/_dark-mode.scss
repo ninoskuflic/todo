@@ -63,13 +63,14 @@
     }
 
     select {
-        background-color: $light-dark;
+        background-color: $light-dark !important;
         color: $white;
     }
 
     .add-tasks {
         input {
             color-scheme: dark;
+            background-color: $light-dark !important;
         }
     }
 
