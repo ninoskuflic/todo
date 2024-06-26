@@ -43,7 +43,7 @@
 
     input {
         background-color: $light-dark;
-        color: $white;
+        color: $white !important;
     }
 
     #due-date {

@@ -28,7 +28,7 @@
 }
 .dark input {
   background-color: #201f1e;
-  color: white;
+  color: white !important;
 }
 .dark #due-date {
   background-color: #201f1e;
@@ -377,6 +377,7 @@ p {
   flex-direction: row;
 }
 .header .add-tasks input {
+  color: #202020;
   margin: 0;
   border: none;
   border-radius: 0;
