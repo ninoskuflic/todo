@@ -1,301 +1,348 @@
 // API Endpoint
-const api_url = 'https://api.edu.skuflic.com/tasks';
+const api_url = 'https://api.edu.skuflic.com/tasks'; // Base URL for the API
 
 // Global Variables
-const date = new Date();
-const audio = new Audio('assets/audio/ping.mp3');
-const options = { month: 'long', day: 'numeric', year: 'numeric' };
-const list = document.getElementById('list');
+const date = new Date(); // Current date and time
+const audio = new Audio('assets/audio/ping.mp3'); // Audio file to be played
+const options = { month: 'long', day: 'numeric', year: 'numeric' }; // Options for formatting dates
 
-// Service Worker
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('/sw.js', { scope: '/' });
-// }
-
+// Function to get a specific cookie by name
 function getCookie(name) {
-    const match = document.cookie.match(new RegExp(name + '=([^;]+)'));
-    return match ? match[1] : null;
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null; // Return the cookie value if found, else null
 }
 
+// Function to set a cookie with a name, value, and expiration in days
 function setCookie(name, value, days) {
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`;
+  let localDateObject = new Date();
+  localDateObject.setTime(
+    localDateObject.getTime() + days * 24 * 60 * 60 * 1000
+  );
+  const expires = 'expires=' + localDateObject.toUTCString();
+  document.cookie = `${name}=${value};${expires};path=/`;
 }
 
-// Date
+// Setting the due date input to the current date and displaying the current date
 document.getElementById('due-date').valueAsDate = date;
-document.getElementById('date').innerHTML = date.toLocaleDateString('en-US', options);
-document.getElementById('year').innerText = date.getFullYear();
+document.getElementById('date').innerHTML = date.toLocaleDateString(
+  'en-US',
+  options
+);
 
-// Dark Mode
-if (localStorage.getItem('preferDark') == '1') {
-    enableDarkMode()
+// Enabling dark mode if previously set in localStorage
+if (localStorage.getItem('dark-mode') == 'enabled') {
+  enableDarkMode();
 }
 
+// Function to enable or toggle dark mode
 function enableDarkMode() {
-    document.body.classList.toggle('dark');
-    const darkMode = document.getElementById('dark-mode');
-    document.getElementById('loading').style.backgroundColor = '#121212';
-    document.querySelector('.percentage').style.color = '#FFF';
-    darkMode.innerHTML === 'Enable Dark Mode' ? darkMode.innerHTML = 'Disable Dark Mode' : darkMode.innerHTML = 'Enable Dark Mode';
+  document.body.classList.toggle('dark');
+  const darkMode = document.getElementById('dark-mode');
+  document.getElementById('loading').style.backgroundColor = '#121212';
+  document.querySelector('.percentage').style.color = '#FFF';
+  darkMode.innerHTML === 'Enable Dark Mode'
+    ? (darkMode.innerHTML = 'Disable Dark Mode')
+    : (darkMode.innerHTML = 'Enable Dark Mode');
 }
 
+// Toggle dark mode on button click and update localStorage
 document.getElementById('dark-mode').addEventListener('click', function () {
-    enableDarkMode()
-    localStorage.getItem('preferDark') == '1' ? localStorage.setItem('preferDark', '0') : localStorage.setItem('preferDark', '1');
+  enableDarkMode();
+  localStorage.getItem('dark-mode') == 'enabled'
+    ? localStorage.setItem('dark-mode', 'disabled')
+    : localStorage.setItem('dark-mode', 'enabled');
 });
 
-// Top Bar - Cookie Notice
+// Hide the top bar and set a cookie when the top bar is clicked
 const topbar = document.getElementById('top-bar-hide');
 topbar.addEventListener('click', function () {
-    document.querySelector('.top-bar').style.display = 'none';
-    setCookie('skuflic-todo-cookie-notice', 'closed', 7)
-})
-
-if (getCookie('skuflic-todo-cookie-notice') == 'closed') {
-    document.querySelector('.top-bar').style.display = 'none';
-}
-
-// Logo Animation
-const progressLogEl = document.querySelector('.percentage');
-anime({
-    targets: '.loading .el',
-    direction: 'alternate',
-    loop: false,
-    duration: 1000,
-    easing: 'easeInOutCirc',
-    update: function (anim) {
-        progressLogEl.innerHTML = Math.round(anim.progress) + '%';
-    },
+  document.querySelector('.top-bar').style.display = 'none';
+  localStorage.setItem('cookie-notice', 'closed');
 });
 
-setTimeout(() => {
-    document.getElementsByClassName('loading')[0].style.display = 'none';
-}, 1000)
+// Hide the top bar if the cookie is already set
+if (localStorage.getItem('cookie-notice') == 'closed') {
+  document.querySelector('.top-bar').style.display = 'none';
+}
 
-// Modal
-// References to DOM elements
+// Logo Animation using anime.js library
+const progressLogEl = document.querySelector('.percentage');
+anime({
+  targets: '.loading .el',
+  direction: 'alternate',
+  loop: false,
+  duration: 1000,
+  easing: 'easeInOutCirc',
+  update: function (anim) {
+    progressLogEl.innerHTML = Math.round(anim.progress) + '%';
+  },
+});
+
+// Hide the loading screen after the animation is done
+setTimeout(() => {
+  document.getElementsByClassName('loading')[0].style.display = 'none';
+}, 1000);
+
+// Modal functionality
 const modal = document.getElementById('modal');
 const button = document.getElementById('button');
 const span = document.querySelector('.close-modal');
 
-// Show Modal
+// Show the modal
 function showModal() {
-    modal.style.display = 'block';
+  modal.style.display = 'block';
 }
 
-// Hide Modal
+// Hide the modal
 function hideModal() {
-    modal.style.display = 'none';
+  modal.style.display = 'none';
 }
 
-// Event listener for the button click
+// Event listeners for modal interactions
 button.addEventListener('click', showModal);
-
-// Event listener for the close button click
 span.addEventListener('click', hideModal);
-
-// Event listener for clicks outside the modal
 window.addEventListener('click', function (event) {
-    if (event.target === modal) {
-        console.log(event.target); // Object reference
-        hideModal();
-    }
+  if (event.target === modal) {
+    console.log(event.target); // Object reference
+    hideModal();
+  }
 });
 
-// Greeting & Date
+// Display the current year in the footer
+document.getElementById('year').innerText = date.getFullYear();
+
+// Greeting based on the time of day and setting the appropriate icon
 (function () {
-    const hour = date.getHours()
-    const icon = document.getElementById('icon');
-    let text = null;
+  const hour = date.getHours();
+  const icon = document.getElementById('icon');
+  let text = null;
 
-    if (hour < 12) {
-        icon.innerText = 'routine';
-        text = 'Good Morning';
-    } else if (hour < 18) {
-        icon.innerText = 'clear_day';
-        text = 'Good Afternoon';
-    } else {
-        icon.innerText = 'dark_mode';
-        text = 'Good Evening';
-    }
+  if (hour < 12) {
+    icon.innerText = 'routine';
+    text = 'Good Morning';
+  } else if (hour < 18) {
+    icon.innerText = 'clear_day';
+    text = 'Good Afternoon';
+  } else {
+    icon.innerText = 'dark_mode';
+    text = 'Good Evening';
+  }
 
-    document.getElementById('greeting').innerHTML = `${text}`;
-})()
-
-// User Data
-function setUser() {
-    localStorage.setItem('user', document.getElementById('name').value);
-    document.getElementById('modal').style.display = 'none';
-    window.location.reload();
-}
-
-(function showUser() {
-    const user = localStorage.getItem('user');
-    document.getElementById('user').innerText = `${!user ? 'Hey there stranger' : user}`;
+  document.getElementById('greeting').innerHTML = `${text}`;
 })();
 
-// Delete task
-function handleResourceDeletion(element) {
-    fetch(`${api_url}/${element.dataset.id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
-            } else {
-                element.remove();
-                checkEmpty();
-                console.log('Resource deleted successfully');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+// Function to set the user's name in localStorage and reload the page
+function setUser() {
+  let user = document.getElementById('name');
+  localStorage.setItem('user', user.value);
+  document.getElementById('user').innerHTML = user.value;
+  user.value = null;
+  hideModal();
 }
 
-// Core Functionalities of To Do App
+// Display the user's name or a default greeting if no user is set
+(function showUser() {
+  const user = localStorage.getItem('user');
+  document.getElementById('user').innerText = `${
+    !user ? 'Hey there stranger' : user
+  }`;
+})();
+
+// Function to handle the deletion of a task
+function handleResourceDeletion(element) {
+  fetch(`${api_url}/${element.dataset.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Request failed with status ${response.status}: ${response.statusText}`
+        );
+      } else {
+        element.remove(); // Remove the task element from the DOM
+        checkEmpty(); // Check if the task list is empty
+        console.log('Resource deleted successfully');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+// Event listener for task list interactions
 document.getElementById('list').addEventListener('click', (event) => {
-    if (event.target.classList.contains('close')) {
-        handleResourceDeletion(event.target.parentElement)
+  if (event.target.classList.contains('close')) {
+    handleResourceDeletion(event.target.parentElement); // Handle task deletion
+  } else {
+    const clickedElement = event.target;
+
+    // Find the closest li element to the clicked target
+    const listItem = clickedElement.closest('li');
+    listItem.classList.toggle('checked'); // Toggle the 'checked' class
+    listItem.classList.remove('overdue'); // Remove the 'overdue' class if present
+
+    // Check if the task is completed and overdue
+    if (listItem.dataset.completed !== 'false') {
+      Date.parse(listItem.dataset.due) < date &&
+        listItem.classList.add('overdue');
     } else {
-        const clickedElement = event.target;
+      audio.play(); // Play the audio if the task is newly completed
+    }
 
-        // Use the closest method to find the nearest ancestor with a specific class
-        const listItem = clickedElement.closest('li');
-        listItem.classList.toggle('checked');
-        listItem.classList.remove('overdue');
+    // Toggle the task completion status
+    const taskCompletionStatus =
+      listItem.dataset.completed == 'true'
+        ? (listItem.dataset.completed = 'false')
+        : (listItem.dataset.completed = 'true');
 
-        const due = new Date(listItem.dataset.due)
-
-        if (listItem.dataset.completed !== 'false') {
-            console.log()
-            due < date && due.toLocaleDateString('en-US', options) !== date.toLocaleDateString('en-US', options) && task.completed !== 'true' && listItem.classList.add('overdue');
+    // Update the task status on the server
+    fetch(`${api_url}/${listItem.dataset.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ completed: taskCompletionStatus }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Request failed with status ${response.status}: ${response.statusText}`
+          );
         } else {
-            audio.play();
+          console.log('Resource updated successfully');
         }
-
-        const taskCompletionStatus = listItem.dataset.completed == 'true' ? listItem.dataset.completed = 'false' : listItem.dataset.completed = 'true'
-
-        fetch(`${api_url}/${listItem.dataset.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ completed: taskCompletionStatus }),
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
-            } else {
-                console.log('Resource updated successfully');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
-    }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 });
 
-// Event delegation for input field keypress
-document.getElementById('inputField').addEventListener('keypress', function (event) {
+// Event listener for pressing 'Enter' in the input field
+document
+  .getElementById('inputField')
+  .addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
-        document.getElementById('add').click();
+      event.preventDefault(); // Prevent the default action
+      document.getElementById('add').click(); // Trigger the add button click
     }
-});
+  });
 
-// Function to Create Tasks
+// Function to create a new task list item element
 function createTaskListItem(task) {
-    const li = document.createElement('li');
-    const formattedDate = new Date(task.due);
+  const li = document.createElement('li');
+  const formattedDate = new Date(task.due);
 
-    li.innerHTML = `
+  li.innerHTML = `
     <span class='task' data-id='${task.id}'>${task.task}</span>
-    <span class='date' data-id='${task.id}'>Added ${task.date}${task.due && ` — Due ${formattedDate.toLocaleDateString('en-US', options)}`}</span>
-    <span class='category ${task.category.toLowerCase().split(' ').join('-')}' data-id='${task.id}'>${task.category}</span>
+    <span class='date' data-id='${task.id}'>Added ${task.date}${
+    task.due && ` — Due ${formattedDate.toLocaleDateString('en-US', options)}`
+  }</span>
+    <span class='category ${task.category
+      .toLowerCase()
+      .split(' ')
+      .join('-')}' data-id='${task.id}'>${task.category}</span>
     <span class='close material-symbols-outlined'>delete</span>
     `;
 
-    li.dataset.id = task.id;
-    li.dataset.due = task.due;
-    li.dataset.completed = task.completed;
+  li.dataset.id = task.id;
+  li.dataset.due = task.due;
+  li.dataset.completed = task.completed;
 
-    formattedDate < date && formattedDate.toLocaleDateString('en-US', options) !== date.toLocaleDateString('en-US', options) && task.completed !== 'true' && li.classList.add('overdue');
-    task.completed === 'true' && li.classList.add('checked');
+  formattedDate < date &&
+    task.completed !== 'true' &&
+    li.classList.add('overdue'); // Add 'overdue' class if the task is overdue
+  task.completed === 'true' && li.classList.add('checked'); // Add 'checked' class if the task is completed
 
-    list.appendChild(li);
-    checkEmpty();
-    return li;
+  list.appendChild(li);
+  checkEmpty(); // Check if the task list is empty
+  return li;
 }
 
-// Fetch Data When Page Loads
+// Fetch and display tasks when the page loads
 fetch(api_url)
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(task => {
-            const li = createTaskListItem(task);
-            list.appendChild(li);
-        });
-    }).catch(error => {
-        console.error('Error:', error);
+  .then((response) => response.json())
+  .then((data) => {
+    const list = document.getElementById('list');
+    data.forEach((task) => {
+      const li = createTaskListItem(task); // Create and append each task item
+      list.appendChild(li);
     });
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 
+// Function to add a new task
 function newTask() {
-    const input = document.getElementById('inputField').value;
-    const due = document.getElementById('due-date').value;
-    const category = document.getElementById('category').value;
+  const input = document.getElementById('inputField').value;
+  const due = document.getElementById('due-date').value;
 
-    if (!input.trim()) {
-        showError();
-        return;
-    }
+  if (!input) {
+    showError(); // Show error if the input is empty
+    return;
+  }
+  let newId = 1;
+  const list = document.getElementById('list');
+  const lastChild = list.lastChild;
 
-    const lastChild = list.lastChild;
-    let newId = lastChild?.dataset.id == null ? 1 : parseInt(lastChild.dataset.id) + 1;
+  if (lastChild && lastChild.dataset && lastChild.dataset.id) {
+    newId = parseInt(lastChild.dataset.id) + 1;
+  }
 
-    const task = {
-        id: newId,
-        task: input,
-        completed: 'false',
-        date: date.toLocaleDateString('en-US', options),
-        category: category,
-        due: due
-    };
+  const category = document.getElementById('category').value;
+  const formattedDate = date.toLocaleDateString('en-US', options);
+  const task = {
+    task: input,
+    completed: 'false',
+    date: formattedDate,
+    category: category,
+    id: newId,
+    due: due,
+  };
 
-    // POST Task to Server
-    fetch(api_url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(task),
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
-        } else {
-            createTaskListItem(task);
-            document.getElementById('inputField').value = null;
-            console.log('Resource posted successfully');
-        }
-    }).catch(error => {
-        console.error('Error:', error);
+  // POST new task to the server
+  fetch(api_url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(task),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Request failed with status ${response.status}: ${response.statusText}`
+        );
+      } else {
+        createTaskListItem(task); // Create and append the new task item
+        document.getElementById('inputField').value = null; // Clear the input field
+        console.log('Resource posted successfully');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
     });
 }
 
+// Show an error message if the input field is empty
 function showError() {
-    const error = document.getElementById('inputField');
-    error.placeholder = 'Task cannot be empty.';
+  const error = document.getElementById('inputField');
+  error.placeholder = 'Task cannot be empty.';
 
-    setTimeout(function () {
-        error.placeholder = 'Add a task...';
-    }, 2000);
+  setTimeout(function () {
+    error.placeholder = 'Add a task...';
+  }, 2000);
 }
 
+// Check if the task list is empty and show/hide the empty message
 function checkEmpty() {
-    if (document.getElementById('list').childNodes.length > 0) {
-        document.getElementById('empty').style.display = 'none';
-    } else {
-        document.getElementById('empty').style.display = 'initial';
-    }
+  if (document.getElementById('list').childNodes.length > 0 == true) {
+    document.getElementById('empty').style.display = 'none';
+  } else {
+    document.getElementById('empty').style.display = 'initial';
+  }
 }
