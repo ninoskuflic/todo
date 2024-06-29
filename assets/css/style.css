@@ -28,7 +28,7 @@
 }
 .dark input {
   background-color: #201f1e;
-  color: white !important;
+  color: #757575;
 }
 .dark #due-date {
   background-color: #201f1e;
@@ -39,7 +39,8 @@
   color: white;
 }
 .dark .modal .modal-content input {
-  border: 1px solid #757575;
+  background: #121212;
+  border: none;
   border-right: 0px;
   color: white;
 }
@@ -48,14 +49,18 @@
 }
 .dark .modal.edit #edit-category {
   font-weight: 300;
-  border: 1px solid #757575;
   color: white;
-  border-right: none;
+  padding: 0px;
+  border: none;
+  padding: 0 10px;
+  color: #757575;
+  background: #121212 !important;
 }
 .dark .modal.edit input {
-  border: 1px solid #757575;
-  color: white;
-  background-color: transparent;
+  color-scheme: dark;
+  border: none;
+  color: #757575;
+  background: #121212;
 }
 .dark select {
   background-color: #201f1e !important;
@@ -131,6 +136,14 @@
   font-weight: 300;
   border: none;
   color: #757575;
+  padding: 0 10px;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+}
+.modal #edit-task,
+.modal #edit-due-date {
+  border-left: none;
+  border-right: none;
 }
 .modal .close-modal {
   float: right;
@@ -138,11 +151,9 @@
   float: right;
   cursor: pointer;
 }
-.modal.edit .modal-content {
-  background-color: #EFF1F7;
-}
 .modal.edit input {
-  border: none;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
   color: #757575;
   background-color: white;
 }
@@ -355,10 +366,6 @@ main {
   background-color: #faf9f8;
 }
 
-.main {
-  margin-bottom: 30px;
-}
-
 h2 {
   text-align: left;
   font-weight: 400;
@@ -382,18 +389,15 @@ p {
 }
 
 .main {
-  margin-bottom: 20px;
   display: flex;
+  gap: 15px;
 }
 .main img {
   width: 80px;
-  margin-right: 15px;
-}
-.main p {
-  margin-bottom: 0px;
 }
 
 .header {
+  gap: 15px;
   background-color: #eff1f7;
   padding: 40px;
   color: #202020;
@@ -434,14 +438,14 @@ p {
   max-width: 130px;
   color: #757575;
 }
+.header .add-tasks #category {
+  color: #757575;
+}
 .header .add-tasks select {
   border: 0px;
   margin: 0px;
   height: inherit;
   padding: 0px;
-  color: #757575;
-  border-right: 10px solid transparent;
-  border-left: 10px solid transparent;
   font-size: 13px;
   font-weight: 300;
   font-family: "GT Walsheim Pro";

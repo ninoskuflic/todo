@@ -65,6 +65,15 @@
         font-weight: 300;
         border: none;
         color: #757575;
+        padding: 0 10px;
+        border-top: 1px solid #efefef;
+        border-bottom: 1px solid #efefef;
+    }
+
+    #edit-task,
+    #edit-due-date {
+        border-left: none;
+        border-right: none;
     }
 
     .close-modal {
@@ -75,12 +84,10 @@
     }
 
     &.edit {
-        .modal-content {
-            background-color: #EFF1F7;
-        }
 
         input {
-            border: none;
+            border-top: 1px solid #efefef;
+            border-bottom: 1px solid #efefef;
             color: #757575;
             background-color: white;
         }
