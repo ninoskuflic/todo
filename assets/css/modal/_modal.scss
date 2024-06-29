@@ -34,6 +34,7 @@
     }
 
     .modal-content {
+        color: black;
         background-color: #fefefe;
         margin: 15% auto;
         padding: 20px;
@@ -44,12 +45,26 @@
         float: inherit;
         font-weight: 300;
         border: 1px solid #efefef;
-        width: 100%;
+        flex-grow: 1;
         padding-left: 10px;
+        background-color: transparent;
+        color: black;
 
         &::placeholder {
             font-weight: 300;
         }
+    }
+
+
+    #edit-due-date {
+        max-width: 130px;
+        flex-grow: 0;
+    }
+
+    #edit-category {
+        font-weight: 300;
+        border: none;
+        color: #757575;
     }
 
     .close-modal {
@@ -57,5 +72,17 @@
         font-weight: bold;
         float: right;
         cursor: pointer;
+    }
+
+    &.edit {
+        .modal-content {
+            background-color: #EFF1F7;
+        }
+
+        input {
+            border: none;
+            color: #757575;
+            background-color: white;
+        }
     }
 }

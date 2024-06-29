@@ -62,6 +62,27 @@
         }
     }
 
+    .modal {
+        &.edit {
+            .modal-content {
+                background-color: $light-dark;
+            }
+
+            #edit-category {
+                font-weight: 300;
+                border: 1px solid $gray;
+                color: $white;
+                border-right: none;
+            }
+
+            input {
+                border: 1px solid $gray;
+                color: $white;
+                background-color: transparent;
+            }
+        }
+    }
+
     select {
         background-color: $light-dark !important;
         color: $white;

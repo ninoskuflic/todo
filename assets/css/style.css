@@ -43,6 +43,20 @@
   border-right: 0px;
   color: white;
 }
+.dark .modal.edit .modal-content {
+  background-color: #201f1e;
+}
+.dark .modal.edit #edit-category {
+  font-weight: 300;
+  border: 1px solid #757575;
+  color: white;
+  border-right: none;
+}
+.dark .modal.edit input {
+  border: 1px solid #757575;
+  color: white;
+  background-color: transparent;
+}
 .dark select {
   background-color: #201f1e !important;
   color: white;
@@ -88,6 +102,7 @@
   background-color: #151515;
 }
 .modal .modal-content {
+  color: black;
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
@@ -97,8 +112,10 @@
   float: inherit;
   font-weight: 300;
   border: 1px solid #efefef;
-  width: 100%;
+  flex-grow: 1;
   padding-left: 10px;
+  background-color: transparent;
+  color: black;
 }
 .modal input::-moz-placeholder {
   font-weight: 300;
@@ -106,11 +123,28 @@
 .modal input::placeholder {
   font-weight: 300;
 }
+.modal #edit-due-date {
+  max-width: 130px;
+  flex-grow: 0;
+}
+.modal #edit-category {
+  font-weight: 300;
+  border: none;
+  color: #757575;
+}
 .modal .close-modal {
   float: right;
   font-weight: bold;
   float: right;
   cursor: pointer;
+}
+.modal.edit .modal-content {
+  background-color: #EFF1F7;
+}
+.modal.edit input {
+  border: none;
+  color: #757575;
+  background-color: white;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -204,8 +238,21 @@ footer .legal a:last-child {
 
 ul {
   margin-right: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+ul .close-holder {
+  align-content: center;
+}
+ul .action-holder {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 ul li {
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
   position: relative;
   padding: 12px 8px 12px 8px;
@@ -217,7 +264,6 @@ ul li {
   transition: 0.2s;
   border-radius: 3px;
   border: 1px solid #efefef;
-  margin-bottom: 10px;
   box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.1), 0px 1.6px 3.6px rgba(0, 0, 0, 0.1);
   /* make the list items unselectable */
   -webkit-user-select: none;
@@ -233,39 +279,25 @@ ul li.checked {
   color: #605e5c;
   padding: 12px 8px 12px 35px;
 }
-ul li.checked::before {
-  content: "";
+ul li.checked .task-holder::before {
+  content: "check";
+  font-family: "Material Symbols Outlined";
   position: absolute;
-  border-color: #605e5c;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  top: 21px;
-  left: 17px;
-  transform: rotate(45deg);
-  height: 12px;
-  width: 5px;
+  left: 7px;
+  top: 0;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 ul li.checked .task {
   text-decoration: line-through;
 }
 ul li .task {
   display: block;
+  width: -moz-fit-content;
+  width: fit-content;
   margin-bottom: 5px;
-}
-ul li .close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 12px 16px 12px 16px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  padding-top: 10px;
-}
-ul li .close.material-symbols-outlined {
-  margin-bottom: 0px;
-  margin-top: 0px;
-  font-size: 20px;
-  padding: 19px 10px 19px 19px;
 }
 ul li .date {
   font-size: 10px;
@@ -478,7 +510,6 @@ p {
 }
 
 .material-symbols-outlined {
-  margin-bottom: 7px;
   vertical-align: middle;
   font-size: 18px;
 }

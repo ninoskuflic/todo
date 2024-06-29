@@ -2,7 +2,7 @@
     .add-tasks {
         flex-direction: column !important;
 
-        & > *:not(:last-child) {
+        &>*:not(:last-child) {
             margin-bottom: 10px !important;
         }
     }
@@ -49,12 +49,14 @@
     .top-bar {
         padding: 10px 40px !important;
     }
+
     ul {
         li {
             .date {
                 display: block;
                 margin-bottom: 5px;
             }
+
             .category {
                 margin-left: 0px !important;
             }

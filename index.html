@@ -3,18 +3,7 @@
 
 <head>
   <meta name='viewport' content='width=device-width, initial-scale=1' />
-  <!-- Google Tag Manager -->
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-TGZSB2D');
-  </script>
-  <!-- End Google Tag Manager -->
+
   <!-- Favicons -->
   <link rel='apple-touch-icon' sizes='180x180' href='https://static.skuflic.com/favicons/apple-touch-icon.png' />
   <link rel='icon' type='image/png' sizes='32x32' href='https://static.skuflic.com/favicons/favicon-32x32.png' />
@@ -26,7 +15,7 @@
   <meta name='theme-color' content='#ffffff' />
 
   <!-- Anime.js Library -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js'></script>
 
   <!-- Title Tag -->
   <title>Skuflic.com To Do</title>
@@ -37,16 +26,12 @@
   <link rel='stylesheet'
     href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0' />
 
-  <!-- Cookie Consent Management -->
-  <link rel='stylesheet' href='https://static.skuflic.com/cookies/cookieconsent.css'>
-  <script type='module' src='https://static.skuflic.com/cookies/cookieconsent.js' defer></script>
-
   <!-- Main Script Tag -->
   <script src='assets/js/script.js' defer></script>
 
 </head>
 
-<body class='light'>
+<body>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src='https://www.googletagmanager.com/ns.html?id=GTM-TGZSB2D' height='0' width='0'
       style='display:none;visibility:hidden'></iframe></noscript>
@@ -80,7 +65,7 @@
           </div>
         </div>
         <div class='add-tasks'>
-          <input type='text' id='inputField' placeholder='Add a task...' required />
+          <input type='text' id='input' placeholder='Add a task...' required />
 
           <input type='date' id='due-date' />
 
@@ -96,7 +81,7 @@
             <option value='Travel'>Travel</option>
             <option value='Miscellaneous'>Miscellaneous</option>
           </select>
-          <button onclick='newTask()' id='add'>Add</button>
+          <button onclick='addTask()' id='add'>Add</button>
         </div>
       </div>
 
@@ -108,6 +93,7 @@
       </div>
     </main>
 
+    <!-- Set User Modal -->
     <div id='modal' class='modal'>
       <div class='modal-content'>
         <span class='close-modal'>&times;</span>
@@ -119,11 +105,37 @@
       </div>
     </div>
 
+    <!-- Edit Task Modal -->
+    <div id='edit-modal' class='modal edit'>
+      <div class='modal-content'>
+        <!-- <span class='close-modal'>&times;</span> -->
+        <p>Please make edits to the task and click save.</p>
+        <div class='holder'>
+          <input type='text' id='edit-task' required />
+          <input type='date' id='edit-due-date' />
+
+          <select name='category' id='edit-category' title='Category' required>
+            <option value='Personal'>Personal</option>
+            <option value='Work'>Work</option>
+            <option value='Home Improvement'>Home Improvement</option>
+            <option value='Education'>Education</option>
+            <option value='Shopping'>Shopping</option>
+            <option value='Health and Wellness'>Health and Wellness</option>
+            <option value='Financial'>Financial</option>
+            <option value='Social'>Social</option>
+            <option value='Travel'>Travel</option>
+            <option value='Miscellaneous'>Miscellaneous</option>
+          </select>
+          <span onclick='editTask()' class='save'>Save</span>
+        </div>
+      </div>
+    </div>
+
+
     <footer>
       <div class='legal'>
         <div>
           <a href='#' id='dark-mode'>Enable Dark Mode</a>
-          <a href='#' data-cc='show-preferencesModal'>Cookie Settings</a>
           <a href='https://go.skuflic.com/servicesagreement' target='_blank' rel='noreferrer'>Services Agreement</a>
           <a href='https://go.skuflic.com/privacy' target='_blank' rel='noreferrer'>Privacy Policy</a>
         </div>
