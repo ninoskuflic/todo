@@ -23,7 +23,7 @@ function hideModal() {
 }
 
 function setUser() {
-  let user = document.ElementById('name');
+  let user = document.getElementById('name');
   localStorage.setItem('user', user.value);
   document.getElementById('user').innerHTML = user.value;
   user.value = null;
