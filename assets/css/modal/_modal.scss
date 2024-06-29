@@ -70,7 +70,10 @@
         border-bottom: 1px solid #efefef;
     }
 
-    #edit-task,
+    #edit-task {
+        border-right: none;
+    }
+
     #edit-due-date {
         border-left: none;
         border-right: none;
