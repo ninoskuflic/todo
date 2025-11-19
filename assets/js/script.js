@@ -1,5 +1,5 @@
 // Global Variables
-const api_url = 'https://api.edu.skuflic.com/tasks'; // Base URL for the API
+const api_url = 'https://api.skuflic.com/tasks'; // Base URL for the API
 const date = new Date(); // Current date and time
 const audio = new Audio('assets/audio/ping.mp3'); // Audio file to be played
 const options = { month: 'long', day: 'numeric', year: 'numeric' }; // Options for formatting dates
