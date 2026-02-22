@@ -74,6 +74,9 @@
   color: white;
 }
 
+.modal .holder {
+  display: flex;
+}
 .modal {
   display: none;
   position: fixed;
@@ -85,9 +88,6 @@
   overflow: auto;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
-}
-.modal .holder {
-  display: flex;
 }
 .modal .save {
   padding: 10px;
@@ -206,7 +206,7 @@
   }
 }
 * {
-  font-family: "GT Walsheim Pro";
+  font-family: "Cal Sans UI", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -217,16 +217,16 @@ body {
 footer {
   background-color: #faf9f8;
 }
+footer .legal p {
+  font-size: 10px;
+  font-weight: 300;
+  color: #333;
+}
 footer .legal {
   padding: 30px 40px;
   font-size: 10px;
   color: #333;
   font-weight: 300;
-}
-footer .legal p {
-  font-size: 10px;
-  font-weight: 300;
-  color: #333;
 }
 footer .legal .disclaimer {
   font-size: 8px;
@@ -357,6 +357,13 @@ ul li .category.miscellaneous {
   color: #b7c8a6;
 }
 
+@font-face {
+  font-family: "Cal Sans UI";
+  src: url("https://static.skuflic.com/fonts/Cal-Sans/CalSansUI-Variable.woff2") format("woff2-variations");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -423,18 +430,18 @@ p {
   padding: 10px;
   font-size: 13px;
   font-weight: 300;
-  font-family: "GT Walsheim Pro";
+  font-family: "Cal Sans UI", ui-sans-serif, system-ui, sans-serif;
   background: white;
 }
 .header .add-tasks input::-moz-placeholder {
   font-size: 13px;
   font-weight: 300;
-  font-family: "GT Walsheim Pro";
+  font-family: "Cal Sans UI", ui-sans-serif, system-ui, sans-serif;
 }
 .header .add-tasks input::placeholder {
   font-size: 13px;
   font-weight: 300;
-  font-family: "GT Walsheim Pro";
+  font-family: "Cal Sans UI", ui-sans-serif, system-ui, sans-serif;
 }
 .header .add-tasks #due-date {
   max-width: 130px;
@@ -450,7 +457,7 @@ p {
   padding: 0px;
   font-size: 13px;
   font-weight: 300;
-  font-family: "GT Walsheim Pro";
+  font-family: "Cal Sans UI", ui-sans-serif, system-ui, sans-serif;
   min-height: 35px;
   background: white;
 }
